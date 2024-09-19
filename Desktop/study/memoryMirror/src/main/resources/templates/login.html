@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .image-container {
+            position: relative;
+            width: 100%;
+            max-height: 20vh;
+        }
+        .login_image {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+        .login-container{
+            position: absolute;
+            top: 48%;
+            left: 40%;
+            transform: translate(-62%, -45%);
+            z-index: 2;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding-right: 143px;
+            border-radius: 10px;
+        }
+        .id, .pwd {
+            display: block;
+            margin-bottom: 30px;
+            padding: 24px 60px 22px 7px;
+            width: 149%;
+        }
+        .lb-id {
+            display: block;
+            padding: 0px 21px 24px 0px;
+            width: 149%;
+            font-size : x-large;
+        }
+        .login-container2{
+            position: absolute;
+            top: 50%;
+            left: 75%;
+            transform: translate(-79%, -50%);
+            padding-right: 131px;
+            border-radius: 10px;
+        }
+        .login-button{
+            width: 200px;
+            height: 67px;
+            background-color: RGB(46,60,88);
+            border-radius: 6%;
+            color: white;
+            font-size: larger;
+        }
+        .signup-container{
+            position: absolute;
+            top: 72%;
+            left: 56%;
+            transform: translate(-78%, -40%);
+        }
+        .signup {
+            font-size: 22px;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="image-container">
+        <img th:src="@{images/login.jpg}" class="login_image">
+    </div>
+    <form th:action="@{/login}" th:object="${user}" method="post">
+        <div class="login-container">
+            <label class="lb-id">로그인</label>
+            <input type="text" th:field="*{userId}" id="id" class="id" placeholder="아이디">
+            <input type="password" th:field="*{password}" id="pwd" class="pwd" placeholder="비밀번호">
+        </div>
+        <div class="login-container2">
+            <button type="submit" class="login-button">로그인</button>
+        </div>
+    </form>
+    <div class="signup-container">
+        <label>아직 추억저장소 회원이 아니신가요?</label>
+        <a th:href="@{/signupPage}" class="signup">회원가입</a>
+    </div>
+</body>
+</html>

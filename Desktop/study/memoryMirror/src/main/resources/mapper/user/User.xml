@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toyproject.memoryMirror.domain.mapper.user.Usermapper">
+
+    <insert id="save" parameterType="User">
+        INSERT INTO user (userId, password, phone, nickname, username)
+        VALUES (#{userId}, #{password}, #{phone}, #{nickname}, #{username})
+    </insert>
+
+    <select id="checkDuplicate" parameterType="User" resultType="int">
+        SELECT COUNT(*)
+        FROM user
+        WHERE phone = #{phone}
+        AND username = #{username}
+    </select>
+
+    <select id="login" parameterType="User" resultType="String">
+        SELECT password
+        FROM user
+        WHERE userId = #{userId}
+    </select>
+</mapper>

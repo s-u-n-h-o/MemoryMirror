@@ -1,0 +1,41 @@
+#시스템 구축에 필요한 설정 정보 작성
+version: "3"
+
+#컨테이너 관련정보/ Springboot 프로젝트내의 application.yml보다 docker-compose가 우선순위로 배치된다.
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: sunhorootpass
+      MYSQL_DATABASE: memory
+      MYSQL_USER: sh
+      MYSQL_PASSWORD: sh1234
+    ports:
+      - "3307:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - my-network
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3307/memory?serverTimezone=Asia/Seoul
+      SPRING_DATASOURCE_USERNAME: sh
+      SPRING_DATASOURCE_PASSWORD: sh1234
+    depends_on:
+        - db
+    networks:
+      - my-network
+    platform: linux/amd64
+
+networks:
+  my-network:
+    driver: bridge
+
+volumes:
+  db-data:
