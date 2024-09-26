@@ -21,8 +21,7 @@ public class SignupController {
 
         userService.save(user);
 
-        return ResponseEntity.status(HttpStatus.FOUND)
-                .header("Location", "/loginPage")
+        return ResponseEntity.status(HttpStatus.OK)
                 .build();
     }
 }

@@ -67,19 +67,41 @@
     <div class="image-container">
         <img th:src="@{images/login.jpg}" class="login_image">
     </div>
-    <form th:action="@{/login}" th:object="${user}" method="post">
+    <form th:action="@{/login}" th:object="${user}" method="post" id="loginForm">
         <div class="login-container">
             <label class="lb-id">로그인</label>
             <input type="text" th:field="*{userId}" id="id" class="id" placeholder="아이디">
             <input type="password" th:field="*{password}" id="pwd" class="pwd" placeholder="비밀번호">
         </div>
         <div class="login-container2">
-            <button type="submit" class="login-button">로그인</button>
+            <button type="button" class="login-button">로그인</button>
         </div>
     </form>
     <div class="signup-container">
         <label>아직 추억저장소 회원이 아니신가요?</label>
         <a th:href="@{/signupPage}" class="signup">회원가입</a>
     </div>
+
+    <script>
+        document.querySelector('.login-button').addEventListener('click', function() {
+            const form = document.getElementById('loginForm');
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                if (!response.ok) {
+                    // 로그인 실패시
+                    return response.text().then(errorMessage => {
+                        alert(errorMessage);
+                    });
+                } else {
+                    // 로그인 성공시 -> 홈화면이동 및 회원 아이디 전달
+                    window.location.href = '/albums';
+                }
+            })
+        });
+    </script>
 </body>
 </html>

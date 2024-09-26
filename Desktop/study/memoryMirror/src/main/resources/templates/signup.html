@@ -67,39 +67,30 @@
                 <input type="text" th:field="*{nickname}" class="nickname" placeholder="닉네임">
             </div>
             <div class="signup-container2">
-                <button type="submit" class="signup-button">회원가입</button>
+                <button type="button" class="signup-button">회원가입</button>
             </div>
-            <div id="error-message" style="color: red;"></div>
         </form>
 
         <script>
-            // 폼 제출 이벤트를 가로채기 위한 JavaScript 코드
-            document.getElementById('signupForm').addEventListener('submit', function(event) {
-                event.preventDefault();
-
-                const form = event.target;
+            document.querySelector('.signup-button').addEventListener('click', function() {
+                const form = document.getElementById('signupForm');
                 const formData = new FormData(form);
 
                 fetch(form.action, {
                     method: 'POST',
                     body: formData
-                })
-                    .then(response => {
+                }).then(response => {
                         if (!response.ok) {
-                            // 에러가 발생했을 때 응답을 받아 에러 메시지를 화면에 표시
+                            // 회원가입이 실패했을때
                             return response.text().then(errorMessage => {
-                                document.getElementById('error-message').textContent = errorMessage;
+                                alert(errorMessage);
                             });
                         } else {
-                            // 성공했을 때는 원하는 대로 처리
-                            window.location.href = '/success'; // 예를 들어 성공 시 리다이렉트
+                            // 회원가입에 성공했을때 -> 로그인페이지로 이동
+                            window.location.href = '/loginPage';
                         }
                     })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            });
+                });
         </script>
-
     </body>
 </html>

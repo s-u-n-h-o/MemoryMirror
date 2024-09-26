@@ -19,5 +19,44 @@
     <div class="image-container">
         <img th:src="@{images/homePage.jpg}" class="home_image">
     </div>
+    <button id="imageButton"></button>
+
+    <script>
+        async function loadAlbums() {
+            try {
+                const response = await fetch('/albums'); // 엔드포인트를 필요에 따라 조정
+                if (!response.ok) {
+                    throw new Error('네트워크 응답이 정상적이지 않습니다.');
+                }
+                const albumList = await response.json();
+
+                const albumContainer = document.getElementById('albumContainer');
+                albumContainer.innerHTML = ''; // 이전 내용 지우기
+
+                // 버튼 이미지 변경
+                const imageButton = document.getElementById('imageButton');
+                if (albumList.length === 0) {
+                    albumContainer.innerHTML = '<p>앨범이 없습니다.</p>';
+                    imageButton.style.backgroundImage = "url('images/create_button.png')"; // 비어 있을 때 이미지
+                } else {
+                    albumList.forEach(album => {
+                        const albumElement = document.createElement('div');
+                        albumElement.className = 'image-container';
+                        albumElement.innerHTML = `
+                            <img src="${album.imageUrl}" class="home_image" alt="${album.title}">
+                            <p>${album.title}</p>
+                        `;
+                        albumContainer.appendChild(albumElement);
+                    });
+                    imageButton.style.backgroundImage = "url('images/add_button.png')"; // 데이터가 있을 때 이미지
+                }
+            } catch (error) {
+                console.error('앨범을 가져오는 중 오류 발생:', error);
+            }
+        }
+
+        // 페이지 로드 시 앨범을 가져옴
+        window.onload = loadAlbums;
+    </script>
 </body>
 </html>
