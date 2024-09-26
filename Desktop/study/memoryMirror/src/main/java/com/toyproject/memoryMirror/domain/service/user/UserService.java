@@ -4,6 +4,8 @@ import com.toyproject.memoryMirror.domain.mapper.user.Usermapper;
 import com.toyproject.memoryMirror.domain.model.user.User;
 import com.toyproject.memoryMirror.web.exception.CustomException;
 import com.toyproject.memoryMirror.web.exception.ExceptionCode;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ public class UserService {
         //로그인 아이디 확인하기
         String userPassword = usermapper.login(user);
         boolean checkPassword = User.checkPassword(user, userPassword);
+
         if(!checkPassword) {
             throw new CustomException(ExceptionCode.NOTFOUND_USER);
         }
@@ -28,16 +31,22 @@ public class UserService {
 
     @Transactional
     public void save(User user) {
-
         int duplicateExists = isDuplicate(user);
+
         if(duplicateExists > 0) {
            throw new CustomException(ExceptionCode.DUPLICATION_USER);
         }
+
         usermapper.save(User.encodePassword(user));
     }
 
     @Transactional
     public int isDuplicate(User user) {
         return usermapper.checkDuplicate(user);
+    }
+
+    public void saveSession(HttpServletRequest request, String userId) {
+        HttpSession httpsession = request.getSession();
+        httpsession.setAttribute("sessionID", userId);
     }
 }

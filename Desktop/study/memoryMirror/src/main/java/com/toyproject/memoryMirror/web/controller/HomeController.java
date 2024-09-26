@@ -24,9 +24,4 @@ public class HomeController {
         model.addAttribute("user", User.builder().build());
         return "signup";
     }
-
-    @GetMapping("/home")
-    public String home(Model mode) {
-        return "/home";
-    }
 }
