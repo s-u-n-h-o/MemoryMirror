@@ -6,31 +6,29 @@
     <style>
         .image-container {
             position: relative;
-            width: 100%;
-            max-height: 20vh;
-        }
-        .home_image {
-            width: 100%;
-            height: auto;
-            object-fit: contain;
+            height: 1000px;
+            background-image: url('/images/home.jpg');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
         }
         .start_button {
             position: absolute;
-            top: 347%;
-            left: 56%;
-            transform: translate(31%, 80%);
+            top: 70%;
+            left: 69%;
+            transform: translate(-50%, -50%);
             z-index: 2;
-            width: 303px !important;
-            height: auto !important;
+            width: 180px;
+            height: auto;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div class="image-container">
-        <img th:src="@{images/home.jpg}" class="home_image">
-        <img th:src="@{images/start_button.png}" class="start_button"
-             th:onclick="|location.href='@{/loginPage}'|">
-    </div>
+<div class="image-container">
+    <img th:src="@{images/start_button.png}" class="start_button"
+         th:onclick="|location.href='@{/loginPage}'|">
+</div>
 </body>
 <script>
 

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1ab7a1c5-ce41-4370-9bfd-e6d6e3e5ee02" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="module-info" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2ThUTiIN7fYemMX002YIzuiSkdG" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "jdk.selected.JAVA_MODULE": "11",
+    "last_opened_file_path": "/Users/sunho/Desktop/javaStudy/src/main/java/generics/boundedWildcard",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "JAVA"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/generics/boundedWildcard" />
+      <recent name="$PROJECT_DIR$/src/main/java" />
+      <recent name="$PROJECT_DIR$/src/main/java/inheritance" />
+      <recent name="$PROJECT_DIR$/src/main/java/인터페이스" />
+      <recent name="$PROJECT_DIR$/src/main/java/interface" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/interface/model/vo/Phone" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.PolymorphismTest">
+    <configuration name="BoundedWildcard" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="generics.boundedWildcard.BoundedWildcard" />
+      <module name="javaStudy.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="generics.boundedWildcard.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PolymorphismTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="polymorphism.PolymorphismTest" />
+      <module name="javaStudy.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="polymorphism.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="generics.boxInBox.main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="generics.boxInBox.main" />
+      <module name="javaStudy.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="generics.boxInBox.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="generics.limit.main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="generics.limit.main" />
+      <module name="javaStudy.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="generics.limit.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="generics.lowerBoundedWildcard.main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="generics.lowerBoundedWildcard.main" />
+      <module name="javaStudy.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="generics.lowerBoundedWildcard.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.PolymorphismTest" />
+        <item itemvalue="Application.BoundedWildcard" />
+        <item itemvalue="Application.generics.lowerBoundedWildcard.main" />
+        <item itemvalue="Application.generics.limit.main" />
+        <item itemvalue="Application.generics.boxInBox.main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1ab7a1c5-ce41-4370-9bfd-e6d6e3e5ee02" name="Changes" comment="" />
+      <created>1691494816315</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1691494816315</updated>
+      <workItem from="1691494817927" duration="8070000" />
+      <workItem from="1691932373047" duration="4657000" />
+      <workItem from="1692003823799" duration="1459000" />
+      <workItem from="1692536279329" duration="8895000" />
+      <workItem from="1692621240617" duration="7085000" />
+      <workItem from="1693115702461" duration="16036000" />
+      <workItem from="1694263960651" duration="598000" />
+      <workItem from="1694325010520" duration="5893000" />
+      <workItem from="1699177671413" duration="174000" />
+      <workItem from="1699785967000" duration="13000" />
+      <workItem from="1715068615924" duration="1347000" />
+      <workItem from="1721798882334" duration="5521000" />
+      <workItem from="1721806461630" duration="4047000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
