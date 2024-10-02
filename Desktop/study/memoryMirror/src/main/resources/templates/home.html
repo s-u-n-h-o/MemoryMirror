@@ -13,50 +13,197 @@
             height: auto;
             object-fit: contain;
         }
+        .create_button{
+            position: absolute;
+            top: 50%; /* 원하는 위치에 맞게 조정 */
+            left: 50%; /* 원하는 위치에 맞게 조정 */
+            transform: translate(-50%, -50%); /* 이미지를 중앙으로 정렬 */
+            z-index: 1; /* 항상 앞에 있도록 설정 */
+            width: 50px; /* 원하는 크기로 조정 */
+            height: 50px; /* 원하는 크기로 조정 */
+        }
+
+        /* 앨범 추가 모달 팝업*/
+        .modal {
+            display: none; /* 기본적으로 숨김 */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* 어두운 배경 */
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 4px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .input-container {
+            margin-bottom: 20px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #2e3c58; /* 버튼 색상 변경 */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1f2a3d; /* 호버 시 색상 변경 (어두운 색상) */
+        }
     </style>
 </head>
 <body>
     <div class="image-container">
         <img th:src="@{images/homePage.jpg}" class="home_image">
+        <img id="imageButton" class="image_button">
+
+        <!--앨범추가하기 모달창-->
+        <div id="createAlbum" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="input-container">
+                    <input type="text" placeholder="앨범명을 입력해 주세요">
+                </div>
+
+                <div class="input-container">
+                    <textarea placeholder="앨범에 대한 설명을 입력해 주시면 더 좋습니다!" rows="4"></textarea>
+                </div>
+
+                <div class="input-container">
+                    <button>사진 올리기</button>
+                </div>
+
+                <div class="input-container">
+                    <input type="text" placeholder=" " disabled>
+                </div>
+
+                <div class="input-container">
+                    <button>확인</button>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <button id="imageButton"></button>
 
     <script>
+        const modal = document.getElementById("createAlbum");
+        const closeBtn = document.querySelector(".close");
+
+        /**
+         * 회원별 앨범리스트 조회
+         * @returns {Promise<void>}
+         */
         async function loadAlbums() {
-            try {
-                const response = await fetch('/albums'); // 엔드포인트를 필요에 따라 조정
-                if (!response.ok) {
-                    throw new Error('네트워크 응답이 정상적이지 않습니다.');
-                }
-                const albumList = await response.json();
+            const response = await fetch('/albums')
+            const albumList = await response.json(); //값 반환
+            const imageButton = document.getElementById('imageButton');
 
-                const albumContainer = document.getElementById('albumContainer');
-                albumContainer.innerHTML = ''; // 이전 내용 지우기
-
-                // 버튼 이미지 변경
-                const imageButton = document.getElementById('imageButton');
-                if (albumList.length === 0) {
-                    albumContainer.innerHTML = '<p>앨범이 없습니다.</p>';
-                    imageButton.style.backgroundImage = "url('images/create_button.png')"; // 비어 있을 때 이미지
-                } else {
-                    albumList.forEach(album => {
-                        const albumElement = document.createElement('div');
-                        albumElement.className = 'image-container';
-                        albumElement.innerHTML = `
-                            <img src="${album.imageUrl}" class="home_image" alt="${album.title}">
-                            <p>${album.title}</p>
-                        `;
-                        albumContainer.appendChild(albumElement);
-                    });
-                    imageButton.style.backgroundImage = "url('images/add_button.png')"; // 데이터가 있을 때 이미지
-                }
-            } catch (error) {
-                console.error('앨범을 가져오는 중 오류 발생:', error);
+            //버튼 이미지
+            if (albumList.length === 0) { //앨범 리스트가 존재할 경우
+                imageButton.src = 'images/create_button.png';
+                imageButton.classList.add('create_button');
+            } else {
+                imageButton.src = 'images/add_button.png'; //앨범 리스트가 없는경우
+                imageButton.classList.add('add_button');
             }
         }
-
         // 페이지 로드 시 앨범을 가져옴
         window.onload = loadAlbums;
+
+        /**
+         * 앨범 추가,생성 버튼
+         */
+        // document.getElementById('createAlbum').addEventListener('click', function() {
+        //     fetch('/albums', {
+        //         method: 'POST'
+        //     }).then(response => {
+        //         if (!response.ok) {
+        //             // 로그인 실패시
+        //             return response.text().then(errorMessage => {
+        //                 alert(errorMessage);
+        //             });
+        //         } else {
+        //             alert("성공");
+        //         }
+        //     })
+        // });
+
+        /**
+         * 앨범 추가 버튼을 클릭할 때, 앨범 정보를 입력할 수 있는 모달 팝업창이 표시
+         */
+        document.getElementById('imageButton').addEventListener('click', function() {
+            // 모달을 보이게 설정
+            modal.style.display = "block";
+        });
+
+        // 닫기 버튼 클릭 시
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        };
     </script>
 </body>
 </html>
