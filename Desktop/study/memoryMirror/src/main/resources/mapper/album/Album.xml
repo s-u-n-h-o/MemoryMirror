@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.toyproject.memoryMirror.domain.mapper.album.Albummapper">
 
-    <select id="getSavedAlbums" parameterType="String" resultType="Album">
+    <select id="getSavedAlbums" parameterType="Long" resultType="Album">
         SELECT
             a.id,
             a.userId,
@@ -10,7 +10,62 @@
             a.description,
             a.createdAt
         FROM album a
-        LEFT JOIN user u ON a.userId = u.id
-        WHERE u.userId = #{userid};
+        WHERE a.userId = #{userid};
     </select>
+
+    <insert id="createAlbum" parameterType="Album" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO album (userId, title, description, createdAt)
+        VALUES ( #{userId}, #{title}, #{description}, DATE_FORMAT(NOW(), '%Y%m%d'));
+    </insert>
+
+    <insert id="saveAlbumsDetail">
+        INSERT INTO albumDetail (albumId,fileName,fixed)
+        VALUES
+        <foreach collection="urlList" item="url" separator=",">
+            (#{albumId} , #{url}, 0)
+        </foreach>
+    </insert>
+
+    <select id="getAlbumDetails" parameterType="Long" resultType="AlbumDetail">
+        SELECT
+            id,
+            fileName,
+            fixed
+        FROM albumDetail
+        WHERE albumId = #{albumId}
+    </select>
+
+    <select id="getAlbumInfo" parameterType="Long" resultType="Album">
+        SELECT
+            id,
+            userId,
+            title,
+            description
+        FROM album
+        WHERE id = #{albumId};
+    </select>
+
+    <delete id="deleteAlbum" parameterType="AlbumDetail">
+        DELETE FROM albumDetail WHERE id = #{id}
+    </delete>
+
+    <update id="updateAlbum" parameterType="Album">
+        UPDATE album
+        SET title = #{title} , description = #{description}
+        WHERE id = #{id}
+    </update>
+
+    <select id="getAlbumUrlList" parameterType="Long" resultType="String">
+        SELECT fileName
+        FROM albumDetail
+        WHERE albumId = #{albumId}
+    </select>
+
+    <delete id="deleteAlbumDetailAll" parameterType="Long">
+        DELETE FROM albumDetail WHERE albumId = #{albumId};
+    </delete>
+
+    <delete id="deleteAlbumAll" parameterType="Long">
+        DELETE FROM album WHERE id = #{albumId};
+    </delete>
 </mapper>
