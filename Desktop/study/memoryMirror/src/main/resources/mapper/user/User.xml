@@ -14,8 +14,8 @@
         AND username = #{username}
     </select>
 
-    <select id="login" parameterType="User" resultType="String">
-        SELECT password
+    <select id="login" parameterType="User" resultType="User">
+        SELECT password, id
         FROM user
         WHERE userId = #{userId}
     </select>

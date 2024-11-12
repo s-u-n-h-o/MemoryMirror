@@ -9,5 +9,5 @@ public interface Usermapper {
     void save(User user);
 
     int checkDuplicate(User user);
-    String login(User user);
+    User login(User user);
 }
