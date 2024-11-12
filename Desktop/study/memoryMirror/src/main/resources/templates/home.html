@@ -2,68 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>추억 저장소</title>
     <style>
         .image-container {
             position: relative;
-            width: 100%;
-            max-height: 20vh;
+            width: 97.5%;
+            height: 96vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
         }
         .home_image {
             width: 100%;
             height: auto;
             object-fit: contain;
         }
-        .create_button{
+        .create_button {
             position: absolute;
-            top: 50%; /* 원하는 위치에 맞게 조정 */
-            left: 50%; /* 원하는 위치에 맞게 조정 */
-            transform: translate(-50%, -50%); /* 이미지를 중앙으로 정렬 */
-            z-index: 1; /* 항상 앞에 있도록 설정 */
-            width: 50px; /* 원하는 크기로 조정 */
-            height: 50px; /* 원하는 크기로 조정 */
+            top: 41%;
+            left: 47%;
+            transform: translate(-25%, -50%);
+            width: 245px;
+            height: 122px;
+        }
+
+        .add_button {
+            position: absolute;
+            top: 31%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            width: 200px;
+            height: 100px;
         }
 
         /* 앨범 추가 모달 팝업*/
         .modal {
-            display: none; /* 기본적으로 숨김 */
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4); /* 어두운 배경 */
-        }
-
-        .modal-content {
-            background-color: #fff;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 30%;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .modal {
             display: none;
             position: fixed;
-            z-index: 1;
+            z-index: 999;
             left: 0;
             top: 0;
             width: 100%;
@@ -72,13 +52,19 @@
             background-color: rgb(0,0,0);
             background-color: rgba(0,0,0,0.4);
         }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
         .modal-content {
             background-color: #fefefe;
-            margin: 15% auto;
+            margin: 6% auto;
             padding: 20px;
             border: 1px solid #888;
             width: 80%;
-            max-width: 500px;
+            max-width: 800px;
+            height: 600px;
             border-radius: 4px;
         }
         .close {
@@ -94,59 +80,236 @@
             cursor: pointer;
         }
         .input-container {
-            margin-bottom: 20px;
+            margin-top: 20px;
         }
         input[type="text"], textarea {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
+            width: 95%;
+            padding: 13px;
+            margin-top: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+        .file-container input[type="text"] {
+            height: 150px;
+        }
         button {
-            padding: 10px 15px;
-            background-color: #2e3c58; /* 버튼 색상 변경 */
+            background-color: #2e3c58;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            height: 52px;
+            width: 100px;
+            font-size: 15px;
         }
         button:hover {
             background-color: #1f2a3d; /* 호버 시 색상 변경 (어두운 색상) */
+        }
+        .modal-title {
+            color: #2e3c58;
+            font-weight: bold;
+            font-size: large;
+        }
+        .confirm-button {
+            margin-top: 25px;
+            margin-left: 340px;
+        }
+
+        /* 업로드 버튼 스타일 */
+        .upload_button {
+            padding: 1px;
+            background-color: #3e4a5e;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .upload_button:hover {
+            background-color: #5a6d8a;
+        }
+
+        /* 파일 목록 스타일 */
+        .file-list-container {
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        /* 업로드 버튼 스타일 */
+        .upload_button {
+            padding: 1px;
+            background-color: #3e4a5e;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .upload_button:hover {
+            background-color: #5a6d8a;
+        }
+
+        /* 파일 목록 컨테이너 */
+        .file-container {
+            height: 150px; /* 고정된 높이 설정 */
+            overflow-y: auto; /* 스크롤 가능하도록 설정 */
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .file-list-container {
+            display: flex;
+            flex-wrap: wrap; /* 파일들을 가로로 나열 */
+        }
+
+        /* 파일 미리보기 이미지와 삭제 버튼 */
+        .file-item {
+            position: relative;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .image-wrapper {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ddd;
+            overflow: hidden;
+        }
+
+        .preview-image {
+            width: 100%; /* 이미지가 컨테이너 안에서 꽉 차게 */
+            height: 100%; /* 이미지가 컨테이너 안에서 꽉 차게 */
+            object-fit: cover; /* 이미지 비율을 유지하면서 컨테이너에 맞춤 */
+        }
+
+        /* X 버튼 스타일 (왼쪽 상단에 배치하고 원형으로) */
+        .remove-button {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .remove-button:hover {
+            background-color: darkred;
+        }
+
+        #albumsList {
+            position: absolute;
+            display: flex;
+            width: 74%;
+            height: 0%;
+            z-index: 2;
+        }
+
+        .album-item {
+            text-align: center;
+            display: inline-block;
+            width: 120px; /* 책의 너비 */
+            cursor: pointer;
+            padding-right: 3%;
+        }
+
+        .album-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease; /* 호버 시 애니메이션 */
+        }
+
+        .album-item:hover img {
+            transform: translateY(-5px); /* 호버 시 살짝 올라가는 효과 */
+        }
+
+        .album-item h3 {
+            font-size: 14px;
+            margin-top: 10px;
+            color: #2e3c58;
+            font-weight: bold;
+        }
+
+        .album-item p {
+            font-size: 12px;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        /* 체크박스 스타일 */
+        .album-item .delete-checkbox {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            z-index: 10;
+            text-align: left;
+        }
+
+        .select-delete {
+            position: absolute;
+            top: 44.5%;
+            right: 15%;
+            color: #2e3c58;
+            font-size: larger;
+            cursor: pointer;
+            z-index: 20;
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="image-container">
-        <img th:src="@{images/homePage.jpg}" class="home_image">
         <img id="imageButton" class="image_button">
+        <a id="selectDelete" class="select-delete"></a>
+
+        <div id="albumsList" class="albums-list"></div>
 
         <!--앨범추가하기 모달창-->
         <div id="createAlbum" class="modal" style="display: none;">
             <div class="modal-content">
                 <span class="close">&times;</span>
+                <div class="modal-title">
+                    <h3>추억앨범</h3>
+                </div>
                 <div class="input-container">
-                    <input type="text" placeholder="앨범명을 입력해 주세요">
+                    <input id="title" type="text" placeholder="앨범명을 입력해 주세요.">
                 </div>
 
                 <div class="input-container">
-                    <textarea placeholder="앨범에 대한 설명을 입력해 주시면 더 좋습니다!" rows="4"></textarea>
+                    <textarea id="description" placeholder="앨범에 대한 설명을 입력해 주시면 더 좋습니다!" rows="4"></textarea>
                 </div>
 
                 <div class="input-container">
-                    <button>사진 올리기</button>
+                    <!-- 사진 올리기 버튼 -->
+                    <button class="upload_button" id="uploadButton">사진 올리기</button>
                 </div>
 
-                <div class="input-container">
-                    <input type="text" placeholder=" " disabled>
+                <div class="file-container">
+                    <!-- 선택된 파일들의 미리보기 이미지와 삭제 버튼이 표시될 영역 -->
+                    <div id="fileListContainer" class="file-list-container"></div>
                 </div>
 
+                <!-- 숨겨진 파일 입력 요소 -->
+                <input type="file" id="fileInput" accept=".jpg,.jpeg,.png" multiple style="display: none;">
+
                 <div class="input-container">
-                    <button>확인</button>
+                    <button class="confirm-button" id="confirmButton">등록</button>
                 </div>
             </div>
         </div>
-
     </div>
 
     <script>
@@ -158,52 +321,233 @@
          * @returns {Promise<void>}
          */
         async function loadAlbums() {
+            //앨범 리스트 이미지 초기화
+            document.querySelectorAll('.album-item').forEach(item => {
+                item.remove(); // album-item 요소 자체를 제거
+            });
+
             const response = await fetch('/albums')
             const albumList = await response.json(); //값 반환
             const imageButton = document.getElementById('imageButton');
 
+            const albumContainer = document.getElementById('albumsList');
+            const imageContainer = document.querySelector('.image-container'); //배경 이미지 변환때문
+            const selectDelete = document.getElementById("selectDelete"); //선택삭제
+
+            //이미지를 랜덤으로 보여주기 위한 값
+            const albumImages = [
+                'images/book_1.png',
+                'images/book_2.png',
+                'images/book_3.png',
+                'images/book_4.png'
+            ];
+
             //버튼 이미지
-            if (albumList.length === 0) { //앨범 리스트가 존재할 경우
+            if (albumList.length === 0) { //앨범 리스트가 없는경우
                 imageButton.src = 'images/create_button.png';
                 imageButton.classList.add('create_button');
+                imageContainer.style.backgroundImage = "url('images/homePage.jpg')";
+                selectDelete.innerText= "";
             } else {
-                imageButton.src = 'images/add_button.png'; //앨범 리스트가 없는경우
+                imageButton.src = 'images/add_button.png'; //앨범 리스트가 존재할 경우
                 imageButton.classList.add('add_button');
+                imageContainer.style.backgroundImage = "url('images/homePage2.jpg')";
+                selectDelete.innerText= "선택삭제";
+
+                // 앨범 리스트 렌더링
+                albumList.forEach((album, index) => {
+                    const albumDiv = document.createElement('div');
+                    albumDiv.classList.add('album-item');
+                    albumDiv.dataset.id = album.id; //id값 조회
+
+                    // 앨범별 이미지 순차적으로 선택
+                    const albumImage = document.createElement('img');
+                    albumImage.src = albumImages[index % albumImages.length];
+                    albumImage.classList.add('home_image');
+
+                    // 앨범 제목과 설명
+                    const albumTitle = document.createElement('h3');
+                    albumTitle.textContent = album.title;
+                    const albumDescription = document.createElement('p');
+                    albumDescription.textContent = album.description;
+
+                    //체크박스
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.classList.add('delete-checkbox');
+
+                    // 앨범 요소 보여주기
+                    albumDiv.appendChild(checkbox);
+                    albumDiv.appendChild(albumImage);
+                    albumDiv.appendChild(albumTitle);
+                    albumDiv.appendChild(albumDescription);
+                    albumContainer.appendChild(albumDiv);
+                });
             }
         }
         // 페이지 로드 시 앨범을 가져옴
         window.onload = loadAlbums;
 
         /**
-         * 앨범 추가,생성 버튼
+         * 앨범 생성 버튼
          */
-        // document.getElementById('createAlbum').addEventListener('click', function() {
-        //     fetch('/albums', {
-        //         method: 'POST'
-        //     }).then(response => {
-        //         if (!response.ok) {
-        //             // 로그인 실패시
-        //             return response.text().then(errorMessage => {
-        //                 alert(errorMessage);
-        //             });
-        //         } else {
-        //             alert("성공");
-        //         }
-        //     })
-        // });
+        document.getElementById('confirmButton').addEventListener('click', function() {
+            const title = document.getElementById("title").value;
+            const description = document.getElementById("description").value;
 
+            const fileInput = document.getElementById("fileInput");
+            const files = fileInput.files;
+
+            //formData에 담기
+            const formData = new FormData();
+
+            // 앨범 데이터를 개별적으로 추가
+            formData.append("title", title);
+            formData.append("description", description);
+
+            // 파일들을 FormData에 추가 (여러 파일 전송 가능)
+            for (let i = 0; i < files.length; i++) {
+                formData.append("files", files[i]);
+            }
+
+            fetch("/albums", {
+                method: "POST",
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    loadAlbums(); // 앨범 조회 함수 호출
+                    document.getElementById('createAlbum').style.display = 'none'; // 모달 닫기
+                }
+            })
+                .catch(error => console.error('Error:', error));
+        })
         /**
          * 앨범 추가 버튼을 클릭할 때, 앨범 정보를 입력할 수 있는 모달 팝업창이 표시
          */
         document.getElementById('imageButton').addEventListener('click', function() {
             // 모달을 보이게 설정
             modal.style.display = "block";
+            document.getElementById('title').value = ''; // 제목 초기화
+            document.getElementById('description').value = ''; // 설명 초기화
+            document.querySelectorAll('.file-item').forEach(item => {//모달 파일 이미지 삭제
+                item.remove();
+            });
         });
 
         // 닫기 버튼 클릭 시
         closeBtn.onclick = function() {
             modal.style.display = "none";
         };
+
+        // 버튼과 파일 입력 요소, 파일 목록 표시 요소를 선택
+        const uploadButton = document.getElementById('uploadButton');
+        const fileInput = document.getElementById('fileInput');
+        const fileListContainer = document.getElementById('fileListContainer'); // 파일 미리보기 및 삭제 버튼 표시 영역
+
+        // 파일 이름을 저장할 배열
+        let fileNames = [];
+
+        // 유효한 확장자 배열
+        const validExtensions = ['jpg', 'jpeg', 'png'];
+
+        // 사진 올리기 버튼 클릭 시 파일 선택 창 열기
+        uploadButton.addEventListener('click', function() {
+            fileInput.click(); // 숨겨진 파일 입력을 트리거
+        });
+
+        // 파일 선택 후 처리
+        fileInput.addEventListener('change', function() {
+            handleFiles(fileInput.files); // 파일 처리 함수 호출
+        });
+
+        // 파일 처리 함수
+        function handleFiles(files) {
+            fileNames = []; // 파일 배열 초기화
+            for (const file of files) {
+                const fileExtension = file.name.split('.').pop().toLowerCase();
+                if (validExtensions.includes(fileExtension)) {
+                    fileNames.push(file.name); // 파일 이름을 배열에 추가
+                    previewFile(file); // 파일 미리보기 이미지로 추가
+                } else {
+                    alert('파일 확장자는 .jpg, .jpeg, .png만 가능합니다.');
+                }
+            }
+        }
+
+        // 파일을 미리보기 이미지로 추가하는 함수ㅌ
+        function previewFile(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const fileItem = document.createElement('div');
+                fileItem.classList.add('file-item');
+
+                // 미리보기 이미지와 삭제 버튼 생성
+                fileItem.innerHTML = `
+                <div class="image-wrapper">
+                    <img src="${e.target.result}" alt="${file.name}" class="preview-image" />
+                    <button class="remove-button">X</button>
+                </div>
+                `;
+
+                // 'X' 버튼 클릭 시 파일 삭제 처리
+                fileItem.querySelector('.remove-button').addEventListener('click', function() {
+                    fileNames = fileNames.filter(name => name !== file.name); // 배열에서 해당 파일 이름 제거
+                    fileItem.remove(); // 화면에서 해당 파일 요소 삭제
+                });
+
+                fileListContainer.appendChild(fileItem); // 파일 목록 컨테이너에 파일 추가
+            };
+            reader.readAsDataURL(file); // 파일을 읽어서 데이터 URL로 변환
+        }
+
+        /***
+         * 앨범 상세정보 조회 이벤트
+         */
+        document.addEventListener('click', function(event) {
+            // 클릭된 요소가 img 태그인지 확인
+            if (event.target.tagName === 'IMG') {
+                const albumDiv = event.target.closest('.album-item'); // 부모 .album-item 요소 찾기
+                if (albumDiv) {
+                    const albumId = albumDiv.dataset.id;
+
+                    // 앨범 상세 조회
+                    fetch(`/albumDetail?albumId=${albumId}`, {
+                        method: "GET"
+                    }).then(response => {
+                        if (response.ok) {
+                            window.location.href = '/album';
+                        }
+                    }).catch(error => console.error('error:', error));
+                }
+            }
+        });
+
+        /***
+         * 앨범 선택 삭제 이벤트
+         */
+        document.getElementById('selectDelete').addEventListener('click', function(event) {
+            if (confirm("삭제하시겠습니까?")) {
+                const checkboxes = document.querySelectorAll('.delete-checkbox:checked'); // 체크된 체크박스들 가져오기
+
+                // 체크된 체크박스에서 data-id 값을 추출하여 배열에 담기
+                const checkedIdArray = Array.from(checkboxes).map(function (checkbox) {
+                    const albumItem = checkbox.closest('.album-item'); // 체크박스의 부모 .album-item 찾기
+                    return albumItem ? albumItem.getAttribute('data-id') : null; // data-id 값을 가져오기
+                }).filter(id => id !== null); // null을 제외하고 유효한 data-id 값만 필터링
+
+                // query string으로 변환
+                const queryString = checkedIdArray.map(id => `deleteId=${id}`).join('&');
+
+                // 앨범 전체 삭제
+                fetch(`/albums?${queryString}`, {
+                    method: "DELETE"
+                }).then(response => {
+                    if (response.ok) {
+                        loadAlbums();
+                    }
+                }).catch(error => console.error('error:', error));
+            }
+        });
     </script>
 </body>
 </html>

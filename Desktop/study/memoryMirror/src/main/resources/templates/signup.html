@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>추억 저장소</title>
     <style>
         .image-container {
             position: relative;
@@ -50,6 +51,11 @@
             color: white;
             font-size: larger;
         }
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
     </style>
 </head>
     <body>
@@ -61,9 +67,11 @@
                 <label class="lb-id">회원가입</label>
                 <input type="text" th:field="*{userId}" id="id" class="id" placeholder="아이디">
                 <input type="password" th:field="*{password}" id="pwd" class="pwd" placeholder="비밀번호">
-                <input type="text" th:field="*{username}" class="username" placeholder="이름">
-                <input type="text" th:field="*{phone}" id="phone" class="phone" placeholder="핸드폰번호">
-                <input type="text" th:field="*{nickname}" class="nickname" placeholder="닉네임">
+                <span id="userValidation" class="error-message"></span>
+                <input type="text" th:field="*{username}" id="username" class="username" placeholder="이름 특수문자 제외하고 입력해주세요.">
+                <span id="phoneValidation" class="error-message"></span>
+                <input type="text" th:field="*{phone}" id="phone" class="phone" placeholder="핸드폰번호 '-' 제외 11자리 숫자로 입력해주세요.">
+                <input type="text" th:field="*{nickname}" id="nickname" class="nickname" placeholder="닉네임">
             </div>
             <div class="signup-container2">
                 <button type="button" class="signup-button">회원가입</button>
@@ -71,25 +79,70 @@
         </form>
 
         <script>
+            /***
+             * 회원가입 이벤트
+             */
             document.querySelector('.signup-button').addEventListener('click', function() {
-                const form = document.getElementById('signupForm');
-                const formData = new FormData(form);
+                if (validationForm()) { // 유효성 검사 확인 후 제출
+                    const form = document.getElementById('signupForm');
+                    const formData = new FormData(form);
 
-                fetch(form.action, {
-                    method: 'POST',
-                    body: formData
-                }).then(response => {
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: formData
+                    }).then(response => {
                         if (!response.ok) {
-                            // 회원가입이 실패했을때
+                            // 회원가입이 실패했을 때
                             return response.text().then(errorMessage => {
                                 alert(errorMessage);
                             });
                         } else {
-                            // 회원가입에 성공했을때 -> 로그인페이지로 이동
+                            // 회원가입에 성공했을 때 -> 로그인 페이지로 이동
+                            alert("회원가입 축하드립니다.");
                             window.location.href = '/loginPage';
                         }
-                    })
-                });
+                    });
+                }
+            });
+
+            /***
+             * 정규식 검사 : 핸드폰 번호
+             */
+            function validationPhone() {
+                const phone = document.getElementById("phone").value;
+                const pattern = /^\d{3}-\d{3,4}-\d{4}$/; //'-'제외
+                const numbersPattern = /^\d+$/; //숫자만 입력
+                const validationError = document.getElementById("phoneValidation");
+
+                if (!pattern.test(phone) && !numbersPattern.test(phone)) {
+                    validationError.textContent = "전화번호 형식이 잘못되었습니다."
+                    return false;
+                }
+                validationError.textContent = "";
+                return true;
+            }
+
+            /***
+             * 정규식 검사 : 이름
+             */
+            function validationUsername() {
+                const username = document.getElementById("username").value;
+                const pattern = /^[a-zA-Z가-힣]+$/; //한글,영문만 입력 가능
+                const validationError = document.getElementById("userValidation");
+
+                if (!pattern.test(username)) {
+                    validationError.textContent = "한글,영문만 입력 가능합니다."
+                    return false;
+                }
+                validationError.textContent = "";
+                return true;
+            }
+
+            function validationForm() {
+                const isUsernameValid = validationUsername();
+                const isPhoneValid = validationPhone();
+                return isUsernameValid && isPhoneValid;
+            }
         </script>
     </body>
 </html>
