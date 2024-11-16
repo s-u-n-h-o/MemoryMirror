@@ -37,5 +37,6 @@ out/
 .vscode/
 
 !foldername/subfolder/Users/sunho/Desktop/study
-
 .idea/workspace.xml
+docker-compose.yml
+src/main/resources/application.properties
