@@ -31,7 +31,7 @@ jobs:
 
       - name: Use Secrets environment
         run: |
-          echo ${{APPLICATION_PROPERTIES_SECRET}} | base6
+          echo ${{ secrets.APPLICATION_PROPERTIES_SECRET }} | base64 --decode > ./src/main/resources/application.properties
 
   dependency-submission:
 
