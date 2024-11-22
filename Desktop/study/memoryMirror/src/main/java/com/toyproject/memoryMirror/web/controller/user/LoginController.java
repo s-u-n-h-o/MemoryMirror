@@ -20,12 +20,9 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@ModelAttribute User user, HttpSession request) {
-
         Long userSequenceId = userService.login(user);
-
         //로그인 성공시 유저아이디 세션에 저장
         userService.saveSession(request, user.getUserId(), userSequenceId);
-
         return ResponseEntity.status(HttpStatus.OK)
                 .build();
     }
