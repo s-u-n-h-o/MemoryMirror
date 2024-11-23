@@ -21,16 +21,16 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      
+
       - name: make application.properties
         run: |
           cd ./src/main/resources
           touch ./application.yml
           echo "${{ secrets.PROPERTIES }}" > ./application.yml
           shell: bash
-          
+
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+        uses: gradle/actions/setup-gradle@v4
 
       # Docker 로그인 및 컨테이너 실행
       - name: Login to Docker Hub
@@ -50,7 +50,7 @@ jobs:
 
       # Gradle 빌드
       - name: Build with Gradle Wrapper
-        run: ./gradlew build
+        run: ./gradlew clean build
 
 
   dependency-submission:
