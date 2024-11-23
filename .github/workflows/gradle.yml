@@ -21,6 +21,12 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+          
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check current directory
+        run: pwd  # 현재 디렉토리 확인
 
       - name: make application.properties
         run: |
