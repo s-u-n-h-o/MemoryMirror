@@ -89,7 +89,6 @@ public class S3Utils {
         String fileName = preFileName.replace(replace, "");
         try {
             amazonS3.deleteObject(new DeleteObjectRequest(bucketName, fileName));
-            log.info("업로드 성공");
         }catch (AmazonS3Exception e) {
             log.info("파일 업로드 실패 : {}", e.getMessage());
         }
