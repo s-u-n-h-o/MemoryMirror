@@ -25,6 +25,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Print working directory
+        run: pwd
+
+      - name: List all files and directories
+        run: ls -R
+
       - name: Check if resources directory exists
         run: |
           if [ -d "/home/runner/work/MemoryMirror/MemoryMirror/Desktop/study/memoryMirror/src/main/resources" ]; then
