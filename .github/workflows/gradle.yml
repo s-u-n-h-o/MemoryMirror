@@ -25,15 +25,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check current directory
-        run: pwd  # 현재 디렉토리 확인
-
-      - name: List root directory files
-        run: ls -la
-
       - name: Check if resources directory exists
         run: |
-          if [ -d "./home/runner/work/MemoryMirror/MemoryMirror/Desktop/study/memoryMirror/src/main/resources" ]; then
+          if [ -d "/home/runner/work/MemoryMirror/MemoryMirror/Desktop/study/memoryMirror/src/main/resources" ]; then
             echo "src/main/resources directory exists!"
           else
             echo "src/main/resources directory does not exist!"
