@@ -33,7 +33,7 @@ jobs:
 
       - name: Check if resources directory exists
         run: |
-          if [ -d "./src/main/resources" ]; then
+          if [ -d "./home/runner/work/MemoryMirror/MemoryMirror/Desktop/study/memoryMirror/src/main/resources" ]; then
             echo "src/main/resources directory exists!"
           else
             echo "src/main/resources directory does not exist!"
@@ -69,21 +69,3 @@ jobs:
       # Gradle 빌드
       - name: Build with Gradle Wrapper
         run: ./gradlew clean build
-
-
-  dependency-submission:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Generate and submit dependency graph
-        uses: gradle/actions/dependency-submission@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
