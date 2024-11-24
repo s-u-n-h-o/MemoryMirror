@@ -28,6 +28,18 @@ jobs:
       - name: Check current directory
         run: pwd  # 현재 디렉토리 확인
 
+      - name: List root directory files
+        run: ls -la
+
+      - name: Check if resources directory exists
+        run: |
+          if [ -d "./src/main/resources" ]; then
+            echo "src/main/resources directory exists!"
+          else
+            echo "src/main/resources directory does not exist!"
+            exit 1
+          fi
+
       - name: make application.properties
         run: |
           cd .Desktop/study/memoryMirror/src/main/resources
