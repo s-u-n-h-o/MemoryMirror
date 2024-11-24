@@ -42,7 +42,7 @@ jobs:
 
       - name: make application.properties
         run: |
-          cd .Desktop/study/memoryMirror/src/main/resources
+          cd /home/runner/work/MemoryMirror/MemoryMirror/Desktop/study/memoryMirror/src/main/resources
           touch ./application.properties
           echo "${{ secrets.PROPERTIES }}" > ./application.properties
           shell: bash
