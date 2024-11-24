@@ -45,7 +45,7 @@ jobs:
           cd /home/runner/work/MemoryMirror/MemoryMirror/Desktop/study/memoryMirror/src/main/resources
           touch ./application.properties
           echo "${{ secrets.PROPERTIES }}" > ./application.properties
-          shell: bash
+        shell: bash
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
