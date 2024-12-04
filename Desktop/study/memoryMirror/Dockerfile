@@ -8,8 +8,12 @@ WORKDIR /app
 COPY build/libs/memoryMirror-0.0.1-SNAPSHOT.jar app.jar
 
 # 4. 필요한 리소스 복사 (Optional, static/templates가 있다면)
-COPY src/main/resources/static /app/static
-COPY src/main/resources/templates /app/template
+#COPY src/main/resources/static /app/static
+#COPY src/main/resources/templates /app/template
+
+# github action 경로 추가
+COPY home/runner/work/MemoryMirror/MemoryMirror/Desktop/study/memoryMirror/src/main/resources/static /app/static
+COPY home/runner/work/MemoryMirror/MemoryMirror/Desktop/study/memoryMirror/src/main/resources/templates /app/template
 
 # 5. 포트 노출 (Spring Boot 기본 포트)
 EXPOSE 8080
