@@ -76,7 +76,7 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/memory_repo:latest
-          context: ./Dockerfile
+          context: .
           file: /home/runner/work/MemoryMirror/MemoryMirror/Desktop/study/memoryMirror/Dockerfile
 
       # Gradle 빌드
