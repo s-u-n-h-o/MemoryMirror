@@ -54,7 +54,7 @@ jobs:
 
       # Gradle 빌드
       - name: Build with Gradle Wrapper
-        run: ./gradlew clean build
+        run: ./Desktop/study/memoryMirror/gradlew clean build
 
       # Docker 로그인
       - name: Login to Docker Hub
