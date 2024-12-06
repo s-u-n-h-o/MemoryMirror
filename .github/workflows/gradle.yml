@@ -73,7 +73,7 @@ jobs:
 
           # SSH 연결 및 EC2 인스턴스에 도커 이미지로 배포
       - name: executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@v1.8.0
+        uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.EC2_USERNAME }}
