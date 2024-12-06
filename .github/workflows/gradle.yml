@@ -83,3 +83,21 @@ jobs:
             sudo docker pull ${{ secrets.DOCKER_REPO }}/memory_repo:latest
             docker-compose up -d
             docker image prune -f
+          
+
+          # Docker 컨테이너 확인
+      - name: Verify running Docker containers
+        uses: appleboy/ssh-action@v1.8.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            echo "Checking running Docker containers..."
+            docker ps
+            if [ $(docker ps | grep "memory_repo" | wc -l) -eq 0 ]; then
+              echo "No running containers found for 'memory_repo'."
+              exit 1
+            else
+              echo "Docker container for 'memory_repo' is running successfully!"
+            fi
