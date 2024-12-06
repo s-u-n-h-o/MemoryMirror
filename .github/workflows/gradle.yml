@@ -87,7 +87,7 @@ jobs:
 
           # Docker 컨테이너 확인
       - name: Verify running Docker containers
-        uses: appleboy/ssh-action@v1.8.0
+        uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.EC2_USERNAME }}
