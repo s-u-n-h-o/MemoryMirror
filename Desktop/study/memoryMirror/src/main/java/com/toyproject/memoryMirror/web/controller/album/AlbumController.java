@@ -3,6 +3,7 @@ package com.toyproject.memoryMirror.web.controller.album;
 import com.toyproject.memoryMirror.domain.model.album.Album;
 import com.toyproject.memoryMirror.domain.model.album.AlbumDetail;
 import com.toyproject.memoryMirror.domain.service.album.AlbumService;
+import com.toyproject.memoryMirror.domain.utils.RedisUtils;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,8 @@ import java.util.List;
 public class AlbumController {
 
     private final AlbumService albumService;
+
+    private final RedisUtils redisUtils;
 
     //1. 로그인 성공후 앨범 조회
     @GetMapping("/albums")
@@ -56,14 +59,52 @@ public class AlbumController {
     @GetMapping("/albumDetail")
     public ResponseEntity<Object> albumDetails(@RequestParam("albumId") Long albumId , HttpSession session) {
 
+        //Redis에서 key(앨범ID) 값으로 조회
+        boolean countView = getCountAlbumViews(albumId);
+
+        if(countView) {
+            //Redis에서 album정보 가져오기
+
+        }
+
+
         List<AlbumDetail> albumDetails = albumService.getAlbumDetails(albumId);
         Album albumInfo = albumService.getAlbumInfo(albumId);
 
-        //해당 앨범 정보 redis에 저장 : 클라이언트에서 localstorege나 fetch사용시 post로 데이터를
-        //                         담는다는게 별로 좋은게 아닌거 같아서 redis세션에 담아서 보내는데 이게 좋은 방법인지는 잘 모르겠다.
+        /*
+         * 해당 앨범 정보 redis에 저장 : 클라이언트에서 localstorege나 fetch사용시 post로 데이터를
+         * 담는다는게 별로 좋은게 아닌거 같아서 redis세션에 담아서 보내는데 이게 좋은 방법인지는 잘 모르겠다.
+         */
         albumService.saveSession(session, albumDetails, albumInfo);
 
+        //redis에 앨범 조회 횟수증가
+        countAlbumViews(albumId);
+
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    /***
+     * 앨범 조회시 Redis에서 해당 앨범(key)값 조회수를 조회하는 메서드
+     * cash hit , cash miss check
+     * @param albumId 앨범 시퀀스
+     * @return
+     */
+    private boolean getCountAlbumViews(Long albumId) {
+        boolean countExist = false;
+        Long views = redisUtils.getCountAlbumViews(albumId);
+
+        if(views > 5) {
+            countExist = true;
+        }
+        return false;
+    }
+
+    /***
+     * 앨범조회시 redis에 조회 빈도수 증가시키는 메서드
+     * @param albumId 앨범 시퀀스 아이디
+     */
+    private void countAlbumViews(Long albumId) {
+        redisUtils.countAlbumViews(albumId);
     }
 
     /***

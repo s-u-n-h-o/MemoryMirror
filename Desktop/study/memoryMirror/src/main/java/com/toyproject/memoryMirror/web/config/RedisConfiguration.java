@@ -6,8 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.GenericToStringSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
@@ -34,6 +36,7 @@ public class RedisConfiguration {
         return new LettuceConnectionFactory(redisStandaloneConfiguration);
     }
 
+    // String 값이나 JSON 직렬화된 문자열을 다룰때 사용
     @Bean
     public StringRedisTemplate stringRedisTemplate() {
         StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
@@ -41,10 +44,20 @@ public class RedisConfiguration {
         stringRedisTemplate.setConnectionFactory(redisConnectionFactory());
 
         stringRedisTemplate.setKeySerializer(new StringRedisSerializer());
-        stringRedisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        stringRedisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer()); //직렬화 방식
         stringRedisTemplate.setDefaultSerializer(new StringRedisSerializer());
         stringRedisTemplate.afterPropertiesSet();
         return stringRedisTemplate;
+    }
+
+    // 여러가지 객체를 Redis에 저장해야할때 사용
+    @Bean
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        template.setConnectionFactory(connectionFactory);
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setValueSerializer(new GenericToStringSerializer<>(Object.class));
+        return template;
     }
 
     @Bean
