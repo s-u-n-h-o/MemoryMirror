@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -58,17 +59,17 @@ public class AlbumController {
      */
     @GetMapping("/albumDetail")
     public ResponseEntity<Object> albumDetails(@RequestParam("albumId") Long albumId , HttpSession session) {
+        List<AlbumDetail> albumDetails = new ArrayList<>();
 
         //Redis에서 key(앨범ID) 값으로 조회
         boolean countView = getCountAlbumViews(albumId);
 
-        if(countView) {
-            //Redis에서 album정보 가져오기
-
+        if(countView) { //앨범조회가 5회 초과시 (cash hit인 경우)
+            albumDetails = getRedisToAlbumDetails(albumId); //Redis에서 앨범 정보조회
+        }else { //cach miss인 경우
+            albumDetails = albumService.getAlbumDetails(albumId); //DB에서 조회
         }
 
-
-        List<AlbumDetail> albumDetails = albumService.getAlbumDetails(albumId);
         Album albumInfo = albumService.getAlbumInfo(albumId);
 
         /*
@@ -84,17 +85,28 @@ public class AlbumController {
     }
 
     /***
+     * Redis에 저장된 앨범상세 정보들 조회
+     * @param albumId
+     * @return
+     */
+    private List<AlbumDetail> getRedisToAlbumDetails(Long albumId) {
+        return redisUtils.getRedisToAlbumDetails(albumId);
+    }
+
+    /***
      * 앨범 조회시 Redis에서 해당 앨범(key)값 조회수를 조회하는 메서드
      * cash hit , cash miss check
      * @param albumId 앨범 시퀀스
      * @return
      */
     private boolean getCountAlbumViews(Long albumId) {
-        boolean countExist = false;
         Long views = redisUtils.getCountAlbumViews(albumId);
 
         if(views > 5) {
-            countExist = true;
+            return true;
+        }
+        if(views == 5) { //view가 5번째인경우 redis에 정보저장
+            redisUtils.saveAlbumDetailToRedis(albumService.getAlbumDetails(albumId) ,albumId);
         }
         return false;
     }
