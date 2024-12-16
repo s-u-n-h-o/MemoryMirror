@@ -30,12 +30,11 @@
 //        albums.add(album);
 //
 //        //getSaveAlbums메서드 호출시 albums반환
-////        when(albummapper.getSavedAlbums()).thenReturn(albums);
-////
-////        List<Album> albumList = albumService.getSavedAlbums();
+//        when(albummapper.getSavedAlbums()).thenReturn(albums);
+//        List<Album> albumList = albumService.getSavedAlbums();
 //
 //        //저장된 앨범 리스트가 있는경우
-////        assertThat(albumList.isEmpty()).isFalse();
+//        assertThat(albumList.isEmpty()).isFalse();
 //    }
 //
 //    private Album createAlbum() {

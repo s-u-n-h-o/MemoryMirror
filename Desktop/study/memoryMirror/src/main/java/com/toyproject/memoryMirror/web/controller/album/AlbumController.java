@@ -25,6 +25,8 @@ public class AlbumController {
 
     private final RedisUtils redisUtils;
 
+    int count = 1;
+
     //1. 로그인 성공후 앨범 조회
     @GetMapping("/albums")
     public ResponseEntity<Object> albums() {
