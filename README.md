@@ -17,7 +17,7 @@
   <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
   <img src="https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white">
   <img src="https://img.shields.io/badge/Tymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white">
- <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white">
+  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white">
 <br><br>
 
 - **Backend**
@@ -33,7 +33,7 @@
 
 - **DevOps**
 <br><br>
-<img src="https://img.shields.io/badge/amazonec2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white">
+  <img src="https://img.shields.io/badge/amazonec2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white">
   <img src="https://img.shields.io/badge/githubactions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white">
   <img src="https://img.shields.io/badge/amazons3-569A31?style=for-the-badge&logo=amazons3&logoColor=white">
   <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white">
@@ -72,6 +72,7 @@
 - **아이디와 비밀번호를 입력하여 로그인을 할수 있습니다.**
 - **회원가입 화면으로 넘어갈수 있습니다.**
 
+
 ### 2. 회원가입
 <img width="500" alt="스크린샷 2024-12-20 오후 11 39 25" src="https://github.com/user-attachments/assets/2b65baa6-711e-46c8-b7f4-ecbfe47d7766" />
 
@@ -79,6 +80,7 @@
 - **텍스트박스 안에 있는 요구사항에 맞게 입력해야 회원가입을 할수있습니다**
   - **이름 : 특수문자 제외**
   - **핸드폰 번호 : '-'제외 11자리**
+
 
 ### 3. 홈화면
 
@@ -93,17 +95,17 @@
 - **저장된 앨범 정보를 확인할수 있으며, 새로운 앨범을 추가할수있다.**
 - **저장된 앨범은 4가지 앨범색상이 랜덤으로 생성되고 앨범 클릭시 저장되어 있는 상세사진들을 확인할수있고, 앨범을 선택하여 삭제할수있다.**
 
-3. 저장된 앨범의 상세 사진 조회
+
+### 4. 저장된 앨범의 상세 사진 조회
 
 <img width="500" alt="스크린샷 2024-12-21 오전 12 32 13" src="https://github.com/user-attachments/assets/c87aeb35-bf16-4620-b761-ba0d40cdf93f" />
 
 - **저장한 앨범을 폴라로이드 느낌처럼 한장씩 확인할수있다. 또한 왼쪽 상단 수정버튼을 통해서 사진을 삭제,수정,추가 할수있다.**
 
-4. 앨범 추가 및 삭제 팝업
+
+### 5. 앨범 추가 및 삭제 팝업
 
 <img width="500" alt="스크린샷 2024-12-20 오후 11 49 32" src="https://github.com/user-attachments/assets/2d3136b8-071b-4a51-a093-aaff3af19543" />
 
 - **앨범추가 버튼을 클릭했을때 와 수정버튼을 클릭했을때 팝업창 형식으로 앨범과 사진을 생성할수있다.**
 - **파일의 확장자는 .jpg, .jpeg, .png 만 가능하다.**
-
----
