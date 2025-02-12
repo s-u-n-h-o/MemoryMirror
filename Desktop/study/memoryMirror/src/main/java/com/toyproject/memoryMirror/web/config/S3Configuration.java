@@ -20,7 +20,7 @@ public class S3Configuration {
     private String region;
 
     @Bean
-    public AmazonS3 amazonS3() {
+    public AmazonS3 ₩() {
         //s3클라이언트를 생성하고 aws자격증명과 region을 빈으로 등록
         AWSCredentials credentials = new BasicAWSCredentials(accessKey,secretKey);
 
