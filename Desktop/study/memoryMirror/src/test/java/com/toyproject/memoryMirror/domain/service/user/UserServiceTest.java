@@ -8,12 +8,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mindrot.jbcrypt.BCrypt;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
@@ -91,6 +94,38 @@ class UserServiceTest {
 
         //then : 테스트 결과
         assertThat(duplication).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("회원가입 성공했을때")
+    void save_success() {
+        //given
+        User user = new User().builder()
+                .userId("hehe")
+                .password("1234")
+                .build();
+        Mockito.when(userService.isDuplicate(user)).thenReturn(0); //중복확인 중복없음
+
+        //when
+        userService.save(user); //암호화된 객체가 저장된다.
+
+        //then
+        //verify() : 메소드가 몇번 실행되었는지, 실행이 초과되었는지 검증하는 메소드
+        /**
+         * ArgumentCaptor : 메서드가 호출됳때 전달된 인자를 직접 캡쳐해서 검증하는 기능이다.
+                            Mockito.verify()를 사용할때 특정 객체가 정확히 전달되었는지 확인할수 있지만, 객채가 내부에서 변경되거나
+                            직접 비교할수 없는경우 사용하면 테스트 대상 메서드가 호출될때 실제 전달된 객체를 직접 가져와서 내부 값까지 검증할수있다.
+         **/
+
+        ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
+
+        //captor.capture() : 메서드가 호출될때 전달된 실제인자를 캡쳐하는 역할을 한다.
+        Mockito.verify(usermapper).save(captor.capture());
+
+        User savedUser = captor.getValue(); //객체를 꺼내서 확인할수있다.
+        assertNotEquals("1234", savedUser.getPassword());
+        assertEquals(user.getUserId(), savedUser.getUserId());
+
     }
 
     private User createUser() {
