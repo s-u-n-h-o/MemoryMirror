@@ -1,8 +1,11 @@
 package com.toyproject.memoryMirror.domain.service.album;
 
 import com.toyproject.memoryMirror.domain.mapper.album.Albummapper;
+import com.toyproject.memoryMirror.domain.mapper.user.Usermapper;
 import com.toyproject.memoryMirror.domain.model.album.Album;
 import com.toyproject.memoryMirror.domain.model.album.AlbumDetail;
+import com.toyproject.memoryMirror.domain.model.dto.UserAlbumResponseDTO;
+import com.toyproject.memoryMirror.domain.model.user.User;
 import com.toyproject.memoryMirror.domain.utils.S3Utils;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -26,14 +29,22 @@ public class AlbumService {
 
     private final S3Utils s3Utils;
 
+    private final Usermapper usermapper;
+
     List<String> urlList;
 
     @Transactional
-    public List<Album> getSavedAlbums() {
+    public UserAlbumResponseDTO getSavedAlbums() {
         Long userId = Long.parseLong(String.valueOf(httpSession.getAttribute("userSequenceId")));
         List<Album> albumList = albummapper.getSavedAlbums(userId);
+        User user = usermapper.getUserById(userId);
 
-        return albumList;
+        UserAlbumResponseDTO userAlbumResponseDTO = UserAlbumResponseDTO.builder()
+                .album(albumList)
+                .user(user)
+                .build();
+
+        return userAlbumResponseDTO;
     }
 
     @Transactional

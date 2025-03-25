@@ -268,10 +268,36 @@
             z-index: 20;
             text-decoration: underline;
         }
-    </style>
+        #header-container {
+            position: absolute;
+            top: 7%;
+            right: 7%;
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            font-size: larger;
+            color: #2e3c58;
+        }
+        #userNicknameContainer {
+            white-space: nowrap;
+        }
+        #logout {
+            cursor: pointer;
+            text-decoration: none;
+        }
+        #logout:hover {
+            color: white; /* 글자색을 흰색으로 변경 */
+            transition: 0.3s ease-in-out; /* 부드러운 색상 변경 효과 */
+        }
+</style>
 </head>
 <body>
     <div class="image-container">
+        <!--nickname container-->
+        <div id="header-container">
+            <div id="userNicknameContainer">닉네임</div>
+            <a id="logout" class="logout">로그아웃</a>
+        </div>
         <img id="imageButton" class="image_button">
         <a id="selectDelete" class="select-delete"></a>
 
@@ -326,14 +352,18 @@
                 item.remove(); // album-item 요소 자체를 제거
             });
 
-            const response = await fetch('/albums')
+            const response = await fetch('/albums');
             const albumList = await response.json(); //값 반환
+            const userNickname = albumList.user.nickname;
             const imageButton = document.getElementById('imageButton');
 
             const albumContainer = document.getElementById('albumsList');
+            const userNicknameContainer = document.getElementById("userNicknameContainer")
             const imageContainer = document.querySelector('.image-container'); //배경 이미지 변환때문
             const selectDelete = document.getElementById("selectDelete"); //선택삭제
 
+            //닉네임 추가
+            userNicknameContainer.innerHTML = `<span>${userNickname}님</span>`;
             //이미지를 랜덤으로 보여주기 위한 값
             const albumImages = [
                 'images/book_1.png',
@@ -343,7 +373,7 @@
             ];
 
             //버튼 이미지
-            if (albumList.length === 0) { //앨범 리스트가 없는경우
+            if (!albumList.album || albumList.album.length === 0) { //앨범 리스트가 없는경우
                 imageButton.src = 'images/create_button.png';
                 imageButton.classList.add('create_button');
                 imageContainer.style.backgroundImage = "url('images/homePage.jpg')";
@@ -355,7 +385,7 @@
                 selectDelete.innerText= "선택삭제";
 
                 // 앨범 리스트 렌더링
-                albumList.forEach((album, index) => {
+                albumList.album.forEach((album, index) => {
                     const albumDiv = document.createElement('div');
                     albumDiv.classList.add('album-item');
                     albumDiv.dataset.id = album.id; //id값 조회
@@ -546,6 +576,26 @@
                         loadAlbums();
                     }
                 }).catch(error => console.error('error:', error));
+            }
+        });
+
+        /**
+         * 로그아웃
+         */
+        document.getElementById("logout").addEventListener("click", function (event) {
+            if (confirm("로그아웃 하시겠습니까?")) {
+                fetch("/logout", {method: "GET"})
+                    .then(response => {
+                        if (response.ok) {
+                            //클라이언트의 cookie도 삭제
+                            document.cookie = "JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                            localStorage.removeItem("accessToken");
+                            window.location.href = "/";
+                        }
+                    })
+                    .catch(error => {
+                        alert("오류가 발생했습니다.");
+                    });
             }
         });
     </script>

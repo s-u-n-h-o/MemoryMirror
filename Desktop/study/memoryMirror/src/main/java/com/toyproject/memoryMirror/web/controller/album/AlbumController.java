@@ -2,13 +2,16 @@ package com.toyproject.memoryMirror.web.controller.album;
 
 import com.toyproject.memoryMirror.domain.model.album.Album;
 import com.toyproject.memoryMirror.domain.model.album.AlbumDetail;
+import com.toyproject.memoryMirror.domain.model.dto.UserAlbumResponseDTO;
 import com.toyproject.memoryMirror.domain.service.album.AlbumService;
 import com.toyproject.memoryMirror.domain.utils.RedisUtils;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,12 +32,16 @@ public class AlbumController {
 
     //1. 로그인 성공후 앨범 조회
     @GetMapping("/albums")
-    public ResponseEntity<Object> albums() {
+    public ResponseEntity<UserAlbumResponseDTO> albums() {
         //아이디로 앨범 가져오기 : 있으면 리스트 출력, 없으면 공백값 보내기
-        List<Album> albumList = albumService.getSavedAlbums();
+        try {
+            UserAlbumResponseDTO albumList = albumService.getSavedAlbums();
+            return ResponseEntity.ok(albumList);
 
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(albumList);
+        }catch (Exception e) {
+            log.error("error임 : {}" + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     /**

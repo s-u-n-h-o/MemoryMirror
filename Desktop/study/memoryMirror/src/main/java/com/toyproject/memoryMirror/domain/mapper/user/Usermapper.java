@@ -9,5 +9,8 @@ public interface Usermapper {
     void save(User user);
 
     int checkDuplicate(User user);
+
     User login(User user);
+
+    User getUserById(Long userId);
 }
