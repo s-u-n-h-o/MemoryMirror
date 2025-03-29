@@ -5,6 +5,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # 3. 애플리케이션 JAR 파일 복사
+
 COPY /Desktop/study/memoryMirror/build/libs/memoryMirror-0.0.1-SNAPSHOT.jar app.jar
 #COPY build/libs/memoryMirror-0.0.1-SNAPSHOT.jar app.jar
 
