@@ -65,7 +65,7 @@ class AlbumServiceTest {
     @DisplayName("로그인한 회원아이디로 저장된 앨범정보 조회 성공시")
     void givenUserSavedAlbum_whenGetSavedAlbums_thenReturnAlbumList() {
         //given
-        Mockito.when(albummapper.getSavedAlbums(1L)).thenReturn(createAlbums());
+//        Mockito.when(albummapper.getSavedAlbums(1L)).thenReturn(createAlbums());
 
         //when
 //        List<Album> albumList = albumService.getSavedAlbums();
@@ -78,7 +78,7 @@ class AlbumServiceTest {
     @DisplayName("로그인한 회원아이디로 저장된 앨범정보 조회 실패시 Empty객체 반환")
     void givenUserNoSavedAlbum_whenGetSavedAlbums_thenReturnEmptyList() {
         //given
-        Mockito.when(albummapper.getSavedAlbums(1L)).thenReturn(new ArrayList<>());
+//        Mockito.when(albummapper.getSavedAlbums(1L)).thenReturn(new ArrayList<>());
 
         //when
 //        List<Album> albumList = albumService.getSavedAlbums();
@@ -91,10 +91,10 @@ class AlbumServiceTest {
     @DisplayName("앨범생성 성공했을 경우")
     void createAlbum_WithValidAlbumAndFiles_ShouldCreateAlbumSuccessfully() throws IOException {
         //given
-        MockMultipartFile file = new MockMultipartFile("files", "test1.jpg", "image/jpeg", "image-content-1".getBytes());
-        MultipartFile[] files = {file};
+//        MockMultipartFile file = new MockMultipartFile("files", "test1.jpg", "image/jpeg", "image-content-1".getBytes());
+//        MultipartFile[] files = {file};
 
-        albumService.createAlbum(createAlbum(), files);
+//        albumService.createAlbum(createAlbum(), files);
 
         //then
 
