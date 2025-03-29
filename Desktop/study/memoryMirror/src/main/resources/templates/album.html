@@ -509,12 +509,11 @@
         formData.append("description", document.getElementById("description").value);
         formData.append("id", albumId);
 
-        //앨범 사진 정보
-        const files = document.querySelector("#fileInput").files;
+        const fileInput = document.getElementById("fileInput");
+        const files = fileInput.files
 
-        for (const file of files) {
-            const imageWrapper = document.querySelector(`.image-wrapper img[alt="${file.name}"].add-image`);
-            if (imageWrapper) {
+        if (files && files.length > 0) {
+            for (const file of files) {
                 formData.append("files", file);
             }
         }

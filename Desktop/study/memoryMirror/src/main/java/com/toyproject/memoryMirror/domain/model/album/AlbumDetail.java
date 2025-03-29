@@ -5,7 +5,6 @@ import lombok.*;
 @Data
 @Builder
 @AllArgsConstructor
-@Getter
 public class AlbumDetail {
 
     private  Long id;

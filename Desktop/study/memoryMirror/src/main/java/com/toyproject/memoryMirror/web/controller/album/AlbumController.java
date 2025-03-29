@@ -7,6 +7,7 @@ import com.toyproject.memoryMirror.domain.service.album.AlbumService;
 import com.toyproject.memoryMirror.domain.utils.RedisUtils;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -120,6 +121,18 @@ public class AlbumController {
         return false;
     }
 
+    /**
+     * 앨범 수정시 redis에 이미지 추가
+     * @param albumId 앨범 시퀀스
+     */
+    private void updateRedisAlbumList(Long albumId) {
+        Long views = redisUtils.getCountAlbumViews(albumId);
+
+        if(views > 5) { //view가 5번째인경우 redis에 정보저장
+            redisUtils.saveAlbumDetailToRedis(albumService.getAlbumDetails(albumId) ,albumId);
+        }
+    }
+
     /***
      * 앨범조회시 redis에 조회 빈도수 증가시키는 메서드
      * @param albumId 앨범 시퀀스 아이디
@@ -147,10 +160,11 @@ public class AlbumController {
      * @param files 앨범에 저장할 이미지 사진 정보
      * @return
      */
-    @PutMapping("/albums")
+    @PutMapping(value = "/albums")
     public ResponseEntity<Object> albumUpdate(@ModelAttribute Album album
-            , @RequestParam("files") MultipartFile[] files) throws IOException {
+            , @RequestParam(value = "files", required = false) MultipartFile[] files) throws IOException {
         albumService.updateAlbum(album, files);
+        updateRedisAlbumList(album.getId());
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
