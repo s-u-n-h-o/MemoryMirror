@@ -50,7 +50,7 @@ jobs:
       - name: Build with Gradle Wrapper
         run: |
           cd /home/runner/work/MemoryMirror/MemoryMirror/Desktop/study/memoryMirror
-          ./gradlew wrapper --gradle-version=9.x
+          ./gradlew wrapper --gradle-version=8.10.1
 
       # Docker 로그인
       - name: Login to Docker Hub
