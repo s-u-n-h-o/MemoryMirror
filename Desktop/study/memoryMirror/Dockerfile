@@ -14,8 +14,7 @@ COPY /Desktop/study/memoryMirror/build/libs/memoryMirror-0.0.1-SNAPSHOT.jar app.
 
 # github action 경로 추가
 COPY ./Desktop/study/memoryMirror/src/main/resources/static /app/static
-COPY ./Desktop/study/memoryMirror/src/main/resources/templates /app/template
-
+COPY src/main/resources/templates /app/template
 # 5. 포트 노출 (Spring Boot 기본 포트)
 EXPOSE 8080
 
