@@ -5,16 +5,16 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # 3. 애플리케이션 JAR 파일 복사
-#COPY /Desktop/study/memoryMirror/build/libs/memoryMirror-0.0.1-SNAPSHOT.jar app.jar
-COPY build/libs/memoryMirror-0.0.1-SNAPSHOT.jar app.jar
+COPY /Desktop/study/memoryMirror/build/libs/memoryMirror-0.0.1-SNAPSHOT.jar app.jar
+#COPY build/libs/memoryMirror-0.0.1-SNAPSHOT.jar app.jar
 
 # 4. 필요한 리소스 복사 (Optional, static/templates가 있다면)
-COPY src/main/resources/static /app/static
-COPY src/main/resources/templates /app/template
+#COPY src/main/resources/static /app/static
+#COPY src/main/resources/templates /app/template
 
 # github action 경로 추가
-#COPY ./Desktop/study/memoryMirror/src/main/resources/static /app/static
-#COPY ./Desktop/study/memoryMirror/src/main/resources/templates /app/template
+COPY ./Desktop/study/memoryMirror/src/main/resources/static /app/static
+COPY ./Desktop/study/memoryMirror/src/main/resources/templates /app/template
 
 # 5. 포트 노출 (Spring Boot 기본 포트)
 EXPOSE 8080
