@@ -8,9 +8,6 @@ WORKDIR /app
 COPY build/libs/memoryMirror-0.0.1-SNAPSHOT.jar app.jar
 #COPY build/libs/memoryMirror-0.0.1-SNAPSHOT.jar app.jar
 
-# github action 경로 추가
-#COPY ./Desktop/study/memoryMirror/src/main/resources/static /app/static
-
 # 5. 포트 노출 (Spring Boot 기본 포트)
 EXPOSE 8080
 
