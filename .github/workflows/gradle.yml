@@ -60,6 +60,9 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+
+      - name: 디렉토리 구조 확인 (디버그용)
+        run: ls -R ./Desktop/study/memoryMirror
         
         # Docker 이미지 빌드 및 푸시
       - name: Build and push Docker image
