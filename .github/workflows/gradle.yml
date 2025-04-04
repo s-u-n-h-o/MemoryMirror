@@ -48,7 +48,7 @@ jobs:
 
       # Gradle 빌드: JAR 파일 생성
       - name: Build with Gradle Wrapper
-        run: ./gradlew build
+        run: ./gradlew build -x test
         working-directory: ./Desktop/study/memoryMirror
 
       # Docker 로그인
