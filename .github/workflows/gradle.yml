@@ -70,7 +70,7 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/memory_repo:latest
-          context: .
+          context: ./Desktop/study/memoryMirror
           file: ./Desktop/study/memoryMirror/Dockerfile
 
           # SSH 연결 및 EC2 인스턴스에 도커 이미지로 배포
