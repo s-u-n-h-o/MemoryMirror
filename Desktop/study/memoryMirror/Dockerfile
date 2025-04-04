@@ -8,10 +8,6 @@ WORKDIR /app
 COPY build/libs/memoryMirror-0.0.1-SNAPSHOT.jar app.jar
 #COPY build/libs/memoryMirror-0.0.1-SNAPSHOT.jar app.jar
 
-# 4. 필요한 리소스 복사 (Optional, static/templates가 있다면)
-COPY src/main/resources/static /app/static
-COPY src/main/resources/templates /app/templates
-
 # github action 경로 추가
 #COPY ./Desktop/study/memoryMirror/src/main/resources/static /app/static
 
