@@ -48,9 +48,8 @@ jobs:
 
       # Gradle 빌드: JAR 파일 생성
       - name: Build with Gradle Wrapper
-        run: |
-          cd /home/runner/work/MemoryMirror/MemoryMirror/Desktop/study/memoryMirror
-          ./gradlew wrapper --gradle-version=8.10.1
+        run: ./gradlew build
+        working-directory: ./Desktop/study/memoryMirror
 
       # Docker 로그인
       - name: Login to Docker Hub
@@ -61,16 +60,6 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-
-        # Github Actions에서 Dockerfile 이동시키기
-      - name: Move Dockerfile to root
-        run: mv ./Desktop/study/memoryMirror/Dockerfile ./
-        
-      - name: Check current directory contents
-        run: |
-          pwd
-          ls -la
-
         
         # Docker 이미지 빌드 및 푸시
       - name: Build and push Docker image
