@@ -80,6 +80,6 @@ jobs:
           script: |
             sudo docker rm -f $(docker ps -qa)
             sudo docker pull ${{ secrets.DOCKER_REPO }}/memory_repo:latest
-            docker-compose up -d
+            sudo docker pull ${{ secrets.DOCKER_REPO }}/dotoriham-prod
             docker image prune -f
             
